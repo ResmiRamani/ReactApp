@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 
 import Person from "./Person/Person";
+import { findRenderedComponentWithType } from "react-dom/test-utils";
 
 class App extends Component {
   state = {
@@ -57,8 +58,9 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: "White",
+      backgroundColor: "green",
       font: "inherit",
+      color: "white",
       border: "1px solid blue",
       padding: "8px",
       cursor: "pointer",
@@ -80,11 +82,23 @@ class App extends Component {
           })}
         </div>
       );
+
+      style.backgroundColor = "red";
+    }
+    //let classes = ["red", "font"].join(" ");
+
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push("red");
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push("font");
     }
 
     return (
       <div className="App">
         <h1>This is my first APP</h1>
+        <p className={classes.join(" ")}>This is really working</p>
         <button style={style} onClick={this.togglePersonsHandler}>
           toggle Persons
         </button>
