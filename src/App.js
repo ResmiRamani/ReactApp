@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import Radium, { StyleRoot } from "radium";
+import styled from "styled-components";
+
 import Person from "./Person/Person";
 
 class App extends Component {
@@ -14,16 +15,6 @@ class App extends Component {
     showPersons: false,
   };
 
-  /*switchNameHandler = (newName) => {
-    //console.log("was clicked");
-    this.setState({
-      persons: [
-        { name: newName, age: "20" },
-        { name: "Ishani", age: "23" },
-        { name: "anukutty", age: "56" },
-      ],
-    });
-  };*/
   deletePersonsHandler = (personsindex) => {
     //const persons = this.state.persons.slice();
     const persons = [...this.state.persons];
@@ -56,19 +47,9 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: "green",
-      font: "inherit",
-      color: "white",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-      ":hover": {
-        backgroundColor: "lightgreen",
-        color: "black",
-      },
-    };
     let persons = null;
+    let btnClass = [classes.Button];
+
     if (this.state.showPersons) {
       persons = (
         <div>
@@ -82,17 +63,11 @@ class App extends Component {
                 changed={(event) => this.nameChangeHandler(event, person.id)}
               />
             );
+            btnClass.push(classes.Red);
           })}
         </div>
       );
-
-      style.backgroundColor = "red";
-      style[":hover"] = {
-        backgroundColor: "salmon",
-        color: "black",
-      };
     }
-    //let classes = ["red", "font"].join(" ");
 
     const classes = [];
     if (this.state.persons.length <= 2) {
@@ -103,26 +78,31 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
-        <div className="App">
-          <h1>This is my first APP</h1>
-          <p className={classes.join(" ")}>This is really working</p>
-          <button style={style} onClick={this.togglePersonsHandler}>
-            toggle Persons
-          </button>
-          {persons}
-        </div>
-      </StyleRoot>
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(" ")}>This is really working!</p>
+        <button
+          className={btnClass.join(" ")}
+          alt={this.state.showPersons}
+          onClick={this.togglePersonsHandler}
+        >
+          Toggle Persons
+        </button>
+        {persons}
+      </div>
     );
+
+    /* return (
+      <div className="App">
+        <h1>This is my first APP</h1>
+        <p className={classes.join(" ")}>This is really working</p>
+        <styledButton onClick={this.togglePersonsHandler}>
+          Toggle Persons
+        </styledButton>
+        {persons}
+      </div>
+    );*/
   }
-
-  //return React.createElement("div", null, "hi", "Hi I'M React app!!!!");
-
-  /* return React.createElement(
-    "div",
-    { className: "App" },
-    React.createElement("h1", null, "Hi I'M React app!!!!")
-  );*/
 }
 
-export default Radium(App);
+export default App;
